@@ -223,7 +223,7 @@ jobs:
 
             console.log(release);
 
-            const archivesGlobber = await glob.create('assets/**/*')
+            const archivesGlobber = await glob.create('assets/*/*')
             for await (const file of archivesGlobber.globGenerator()) {
               console.log(`Uploading ${file} to the release ${release.id}`);
 
