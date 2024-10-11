@@ -200,6 +200,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             var path = require('path');
+            var fs = require('fs');
 
             var tagName = '';
             if (context.eventName == 'push') {
@@ -232,7 +233,7 @@ jobs:
                 repo: context.repo.repo,
                 release_id: release.id,
                 name: path.basename(file),
-                data: `@${file}`,
+                data: fs.readFileSync(assetPath),
               });
             }
 
