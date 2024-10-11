@@ -193,6 +193,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: assets/
+          pattern: binary-*
       - name: 'Create draft release'
         uses: actions/github-script@v7
         with:
