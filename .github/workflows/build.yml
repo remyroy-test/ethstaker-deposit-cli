@@ -222,11 +222,13 @@ jobs:
               generate_release_notes: true,
             });
 
-            console.log(release);
+            console.log(`Release ${release.id} created.`);
+
+            console.log('Uploading release assets...');
 
             const archivesGlobber = await glob.create('assets/*/*')
             for await (const file of archivesGlobber.globGenerator()) {
-              console.log(`Uploading ${file} to the release ${release.id}`);
+              console.log(`Uploading ${path.basename(file)} to the release ${release.id}`);
 
               await github.rest.repos.uploadReleaseAsset({
                 owner: context.repo.owner,
