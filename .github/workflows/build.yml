@@ -233,7 +233,7 @@ jobs:
                 repo: context.repo.repo,
                 release_id: release.id,
                 name: path.basename(file),
-                data: fs.readFileSync(assetPath),
+                data: fs.readFileSync(file),
               });
             }
 
