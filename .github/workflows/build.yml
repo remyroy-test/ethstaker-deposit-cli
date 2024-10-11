@@ -208,7 +208,9 @@ jobs:
               core.setFailed(`Unhandled triggering event.`);
             }
 
-            const release = await github.rest.repos.createRelease({
+            console.log('Creating draft release...')
+
+            const { data: release } = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: tagName,
@@ -217,10 +219,22 @@ jobs:
               generate_release_notes: true,
             });
 
-            var path = require('path');
+            console.log(release);
 
-            const globber = await glob.create('assets/*')
-            for await (const file of globber.globGenerator()) {
+            var path = require('path');
+            await io.mkdirP('extracted');
+
+            console.log('Extracting all downloaded artifacts...')
+
+            const assetGlobber = await glob.create('assets/*')
+            for await (const file of assetGlobber.globGenerator()) {
+              console.log(`Extracting ${file} to extracted/`);
+
+              await exec.exec(`unzip ${file} -d extracted/`);
+            }
+
+            const archivesGlobber = await glob.create('extracted/*')
+            for await (const file of archivesGlobber.globGenerator()) {
               console.log(`Uploading ${file} to the release ${release.id}`);
 
               await github.rest.repos.uploadReleaseAsset({
