@@ -197,6 +197,7 @@ jobs:
       - name: Extracting build binaries
         run: |
           mkdir -p extracted
+          ls -al assets/
           unzip assets/* -d extracted/
       - name: 'Create draft release'
         uses: actions/github-script@v7
