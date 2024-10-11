@@ -226,6 +226,9 @@ jobs:
 
             console.log('Extracting all downloaded artifacts...')
 
+            await exec.exec(`pwd`);
+            await exec.exec(`ls assets/`);
+
             const assetGlobber = await glob.create('assets/*')
             for await (const file of assetGlobber.globGenerator()) {
               console.log(`Extracting ${file} to extracted/`);
