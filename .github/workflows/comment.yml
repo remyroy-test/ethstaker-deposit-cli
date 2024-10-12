@@ -24,7 +24,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { WORKFLOW_RUN_ID } = process.env;
-            console.log(WORKFLOW_RUN_ID);
 
             core.exportVariable('COVERAGE', 'unknown');
 
@@ -34,9 +33,7 @@ jobs:
               run_id: WORKFLOW_RUN_ID,
             });
 
-            console.log(allJobs);
-
-            for (const job in allJobs.jobs) {
+            allJobs.jobs.forEach((job) => {
               console.log(job);
               if (
                 job.name === 'coverage-combine' &&
@@ -45,7 +42,7 @@ jobs:
               ) {
                 core.exportVariable('COVERAGE', 'completed');
               }
-            }
+            });
       - name: Output coverage status
         id: output
         run: echo "coverage=${COVERAGE}" >> "$GITHUB_OUTPUT"
