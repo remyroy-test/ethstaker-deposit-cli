@@ -51,6 +51,8 @@ jobs:
     if: ${{ needs.completed-coverage.outputs.coverage == 'completed' }}
     permissions:
       issues: write
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
