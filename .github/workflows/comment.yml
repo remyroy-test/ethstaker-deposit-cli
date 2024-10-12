@@ -1,6 +1,6 @@
 # Safely comment on the PR - https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/
 name: ci-comment
-run-name: adding coverage report comment on PR by ${{ github.actor }}
+run-name: ${{ github.actor }} is adding coverage report comment on PR
 on:
   workflow_run:
     workflows: [ "ci-runner" ]
@@ -24,6 +24,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { WORKFLOW_RUN_ID } = process.env;
+            console.log(WORKFLOW_RUN_ID);
 
             core.exportVariable('COVERAGE', 'unknown');
 
@@ -33,7 +34,10 @@ jobs:
               run_id: WORKFLOW_RUN_ID,
             });
 
+            console.log(allJobs);
+
             for (const job in allJobs.jobs) {
+              console.log(job);
               if (
                 job.name === 'coverage-combine' &&
                 job.status == 'completed' &&
