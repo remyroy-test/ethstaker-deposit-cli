@@ -3,7 +3,6 @@ run-name: ${{ github.actor }} is testing and measuring code quality
 on:
   push:
   pull_request:
-    types: [synchronize, labeled]
     branches: [main]
 jobs:
   lint:
