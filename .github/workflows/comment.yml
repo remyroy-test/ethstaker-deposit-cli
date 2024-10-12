@@ -1,6 +1,6 @@
 # Safely comment on the PR - https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/
 name: ci-comment
-run-name: commenting on PR by ${{ github.actor }}
+run-name: adding coverage report comment on PR by ${{ github.actor }}
 on:
   workflow_run:
     workflows: [ "ci-runner" ]
