@@ -34,7 +34,6 @@ jobs:
             });
 
             allJobs.jobs.forEach((job) => {
-              console.log(job);
               if (
                 job.name === 'coverage-combine' &&
                 job.status == 'completed' &&
@@ -50,6 +49,8 @@ jobs:
     needs: completed-coverage
     # Runs only if we have a completed coverage job from the ci-runner workflow
     if: ${{ needs.completed-coverage.outputs.coverage == 'completed' }}
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
