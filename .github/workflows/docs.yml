@@ -1,5 +1,5 @@
 name: docs
-run-name: ${{ github.actor }} is running docs
+run-name: ${{ github.actor }} is building and publishing docs
 
 on:
   push:
