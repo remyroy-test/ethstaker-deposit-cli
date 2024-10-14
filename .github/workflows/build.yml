@@ -202,6 +202,7 @@ jobs:
           script: |
             var path = require('path');
             var fs = require('fs');
+            const { createHash } = require('node:crypto');
 
             var tagName = '';
             if (context.eventName == 'push') {
@@ -266,8 +267,6 @@ jobs:
               architecture: arm64Architecture,
             }));
 
-            console.log(binariesMap);
-
             console.log('Uploading release assets...');
 
             const binaryPlatformRegex = /(\w+)-(\w+)(?=\.(?:zip|tar\.gz)(.sha256)?$)/;
@@ -277,13 +276,14 @@ jobs:
               console.log(`Uploading ${path.basename(file)} to the release ${release.id}`);
 
               const fileName = path.basename(file);
+              const fileContent = fs.readFileSync(file);
 
               await github.rest.repos.uploadReleaseAsset({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 release_id: release.id,
                 name: fileName,
-                data: fs.readFileSync(file),
+                data: fileContent,
               });
 
               const match = fileName.match(binaryPlatformRegex);
@@ -300,11 +300,16 @@ jobs:
                   binariesMap.set(platform, Object.assign({}, binaryDetails, {
                     binary_archive: fileName,
                   }));
+
+                  const hash = createHash('sha256');
+                  hash.update(fileContent);
+                  const sha256HexDigest = hash.digest('hex');
+                  
+                  const subjectDigest = `sha256:${sha256HexDigest}`;
+                  console.log(subjectDigest);
                 }
               }
             }
-
-            console.log(binariesMap);
 
             let releaseBodyTemplate = fs.readFileSync('.github/release_template.md', { encoding: 'utf8'});
 
