@@ -189,6 +189,7 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
       - name: Download build binaries
         uses: actions/download-artifact@v4
         with:
@@ -238,5 +239,25 @@ jobs:
                 data: fs.readFileSync(file),
               });
             }
+
+            var releaseBody = fs.readFileSync('.github/release_template.md', { encoding: 'utf8'});
+
+            console.log(releaseBody);
+
+            releaseBody = releaseBody.replace('`[GENERATED-RELEASE-NOTES]`', release.body);
+
+            console.log(releaseBody);
+
+            console.log('Updating release body with generated content...');
+
+            const { data: release } = await github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: release.id,
+              body: releaseBody,
+            });
+
+            console.log(release);
+
 
             
