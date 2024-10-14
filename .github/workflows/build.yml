@@ -242,8 +242,9 @@ jobs:
 
             let releaseBodyTemplate = fs.readFileSync('.github/release_template.md', { encoding: 'utf8'});
 
-            console.log(releaseBodyTemplate);
-            console.log(release.body);
+            console.log('Removing comments in release template...');
+
+            releaseBodyTemplate = releaseBodyTemplate.replaceAll(/^\[comment\]:\s*<>\s*\((.*?)\)\s*$/gm, '');
 
             let releaseBody = releaseBodyTemplate.replaceAll('`[GENERATED-RELEASE-NOTES]`', release.body);
 
@@ -258,7 +259,7 @@ jobs:
               body: releaseBody,
             });
 
-            console.log(updatedRelease);
+            
 
 
             
