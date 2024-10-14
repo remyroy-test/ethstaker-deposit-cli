@@ -2,6 +2,7 @@ name: ci-runner
 run-name: ${{ github.actor }} is testing and measuring code quality
 on:
   push:
+    branches: [main]
   pull_request:
     branches: [main]
 jobs:
