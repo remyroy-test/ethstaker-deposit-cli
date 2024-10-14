@@ -297,13 +297,15 @@ jobs:
               const fileName = path.basename(file);
               const fileContent = fs.readFileSync(file);
 
-              await github.rest.repos.uploadReleaseAsset({
+              const { data: asset } = await github.rest.repos.uploadReleaseAsset({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 release_id: release.id,
                 name: fileName,
                 data: fileContent,
               });
+
+              console.log(asset);
 
               const match = fileName.match(binaryPlatformRegex);
               if (match) {
