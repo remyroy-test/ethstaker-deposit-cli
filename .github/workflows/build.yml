@@ -188,6 +188,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      attestations: read
     steps:
       - uses: actions/checkout@v4
       - name: Download build binaries
@@ -225,6 +226,8 @@ jobs:
             });
 
             console.log(`Release ${release.id} created.`);
+
+            console.log(release);
 
             let binariesMap = new Map();
             const emptyBinaryObject = {
