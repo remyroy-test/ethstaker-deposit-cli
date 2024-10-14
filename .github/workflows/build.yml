@@ -241,27 +241,27 @@ jobs:
             const amd64Architecture = 'x86_64';
             const arm64Architecture = 'aarch64';
 
-            binariesMap.set('windows-amd64', Object.assign(emptyBinaryObject, {
+            binariesMap.set('windows-amd64', Object.assign({}, emptyBinaryObject, {
               system: windowsSystem,
               architecture: amd64Architecture,
             }));
-            binariesMap.set('windows-arm64', Object.assign(emptyBinaryObject, {
+            binariesMap.set('windows-arm64', Object.assign({}, emptyBinaryObject, {
               system: windowsSystem,
               architecture: arm64Architecture,
             }));
-            binariesMap.set('darwin-amd64', Object.assign(emptyBinaryObject, {
+            binariesMap.set('darwin-amd64', Object.assign({}, emptyBinaryObject, {
               system: macOSSystem,
               architecture: amd64Architecture,
             }));
-            binariesMap.set('darwin-arm64', Object.assign(emptyBinaryObject, {
+            binariesMap.set('darwin-arm64', Object.assign({}, emptyBinaryObject, {
               system: macOSSystem,
               architecture: arm64Architecture,
             }));
-            binariesMap.set('linux-amd64', Object.assign(emptyBinaryObject, {
+            binariesMap.set('linux-amd64', Object.assign({}, emptyBinaryObject, {
               system: linuxSystem,
               architecture: amd64Architecture,
             }));
-            binariesMap.set('linux-arm64', Object.assign(emptyBinaryObject, {
+            binariesMap.set('linux-arm64', Object.assign({}, emptyBinaryObject, {
               system: linuxSystem,
               architecture: arm64Architecture,
             }));
@@ -293,11 +293,11 @@ jobs:
                 const binaryDetails = binariesMap.get(platform);
 
                 if (fileName.endsWith('.sha256')) {
-                  binariesMap.set(platform, Object.assign(binaryDetails, {
+                  binariesMap.set(platform, Object.assign({}, binaryDetails, {
                     binary_checksum: fileName,
                   }));
                 } else {
-                  binariesMap.set(platform, Object.assign(binaryDetails, {
+                  binariesMap.set(platform, Object.assign({}, binaryDetails, {
                     binary_archive: fileName,
                   }));
                 }
@@ -314,8 +314,6 @@ jobs:
             releaseBodyTemplate = releaseBodyTemplate.trim();
 
             let releaseBody = releaseBodyTemplate.replaceAll('`[GENERATED-RELEASE-NOTES]`', release.body);
-
-            console.log(releaseBody);
 
             console.log('Updating release body with generated content and template...');
 
