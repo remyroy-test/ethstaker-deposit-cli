@@ -250,14 +250,14 @@ jobs:
 
             console.log('Updating release body with generated content...');
 
-            const { data: release } = await github.rest.repos.updateRelease({
+            const { data: updatedRelease } = await github.rest.repos.updateRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: release.id,
               body: releaseBody,
             });
 
-            console.log(release);
+            console.log(updatedRelease);
 
 
             
