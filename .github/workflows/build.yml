@@ -249,7 +249,7 @@ jobs:
 
             console.log(releaseBody);
 
-            console.log('Updating release body with generated content...');
+            console.log('Updating release body with generated content and template...');
 
             const { data: updatedRelease } = await github.rest.repos.updateRelease({
               owner: context.repo.owner,
