@@ -207,6 +207,9 @@ jobs:
 
             console.log('Creating draft release for tag ${tagName}...')
 
+            console.log(`tagName: ${tagName}`);
+            console.log(`context.sha: ${context.sha}`);
+
             const { data: release } = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
