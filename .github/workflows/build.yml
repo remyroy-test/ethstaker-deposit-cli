@@ -209,7 +209,6 @@ jobs:
 
             console.log(`tagName: ${tagName}`);
             console.log(`context.sha: ${context.sha}`);
-            tagName = 'v0.2.1';
 
             const { data: release } = await github.rest.repos.createRelease({
               owner: context.repo.owner,
@@ -362,5 +361,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: release.id,
+              tag_name: tagName,
+              target_commitish: context.sha,
               body: releaseBody,
             });
