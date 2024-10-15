@@ -188,7 +188,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      attestations: read
     steps:
       - uses: actions/checkout@v4
       - name: Download build binaries
@@ -358,8 +357,3 @@ jobs:
               release_id: release.id,
               body: releaseBody,
             });
-
-            
-
-
-            
