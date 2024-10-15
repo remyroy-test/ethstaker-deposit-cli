@@ -219,7 +219,7 @@ jobs:
               generate_release_notes: true,
             });
 
-            console.log(`Release ${release.id} created. Explore it on ${release.html_url}`);
+            console.log(`Release ${release.id} created.`);
 
             let binariesMap = new Map();
             const emptyBinaryObject = {
@@ -365,3 +365,5 @@ jobs:
               target_commitish: context.sha,
               body: releaseBody,
             });
+
+            console.log(`Release ${updatedRelease.id} updated. Explore it on ${updatedRelease.html_url}`);
