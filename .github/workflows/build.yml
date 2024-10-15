@@ -216,8 +216,16 @@ jobs:
             var tagName = '';
             var dockerVersion = '';
             if (context.eventName == 'push') {
-              tagName = context.ref;
-              dockerVersion = tagName;
+              const tagRegex = /(?:refs\/tags\/)?(v\d+\.\d+\.\d+)$/;
+
+              const match = context.ref.match(tagRegex);
+              if (match) {
+                tagName = match[1];
+                dockerVersion = tagName;
+              } else {
+                core.setFailed(`Cannot extract the tag version from ref value '${context.ref}'.`);
+              }
+
             } else if (context.eventName == 'workflow_dispatch') {
               tagName = `dev-${context.actor}-${context.sha.substring(0, 7)}-${context.runId}`;
               dockerVersion = dockerMetadata['containerimage.digest'].replace(':', '-');
