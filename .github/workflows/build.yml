@@ -314,7 +314,11 @@ jobs:
               '|---------|--------------|--------------------|------------------------|'
             ];
 
+            console.log(binariesMap);
+
             binariesMap.forEach((platform, details) => {
+              console.log(platform);
+              console.log(details);
               if (
                 details.binary_archive !== null &&
                 details.binary_archive_download_url !== null &&
