@@ -55,8 +55,9 @@ jobs:
             export BUILD_ARCHITECTURE=arm64
           fi
           export BUILD_FILE_NAME=ethstaker_deposit-cli-${SHORT_SHA}-${BUILD_SYSTEM}-${BUILD_ARCHITECTURE}
-          echo "BUILD_FILE_NAME=${BUILD_FILE_NAME}" >> "$GITHUB_ENV"
           mkdir ${BUILD_FILE_NAME}
+          echo "BUILD_FILE_NAME=${BUILD_FILE_NAME}" >> "$GITHUB_ENV"
+          echo "BUILD_CONFIGS_PATH=${BUILD_CONFIGS_PATH}" >> "$GITHUB_ENV"
       - name: Setup variables (Windows)
         if: ${{ startsWith(matrix.os, 'windows-') }}
         env:
