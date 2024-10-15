@@ -211,9 +211,6 @@ jobs:
 
             const { DOCKER_IMAGE_METADATA, REGISTRY, IMAGE_NAME } = process.env;
 
-            console.log('Metadata:');
-            console.log(DOCKER_IMAGE_METADATA);
-
             const dockerMetadata = JSON.parse(DOCKER_IMAGE_METADATA);
 
             var tagName = '';
@@ -223,7 +220,7 @@ jobs:
               dockerVersion = tagName;
             } else if (context.eventName == 'workflow_dispatch') {
               tagName = `dev-${context.actor}-${context.sha.substring(0, 7)}-${context.runId}`;
-              dockerVersion = dockerMetadata.containerimage.digest;
+              dockerVersion = dockerMetadata['containerimage.digest'];
             } else {
               core.setFailed(`Unhandled triggering event.`);
             }
