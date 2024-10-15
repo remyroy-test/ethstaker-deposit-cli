@@ -213,17 +213,27 @@ jobs:
             var path = require('path');
             var fs = require('fs');
 
-            const { DOCKER_IMAGE_METADATA, DOCKER_IMAGE_TAGS, DOCKER_IMAGE_LABELS } = process.env;
+            const { DOCKER_IMAGE_METADATA, DOCKER_IMAGE_TAGS, DOCKER_IMAGE_LABELS, REGISTRY, IMAGE_NAME } = process.env;
 
+            const dockerMetadata = JSON.parse(DOCKER_IMAGE_METADATA);
+
+            console.log('Metadata:');
             console.log(DOCKER_IMAGE_METADATA);
+
+            console.log('Tags:');
             console.log(DOCKER_IMAGE_TAGS);
+
+            console.log('Labels:');
             console.log(DOCKER_IMAGE_LABELS);
 
             var tagName = '';
+            var dockerVersion = '';
             if (context.eventName == 'push') {
               tagName = context.ref;
+              dockerVersion = tagName;
             } else if (context.eventName == 'workflow_dispatch') {
               tagName = `dev-${context.actor}-${context.sha.substring(0, 7)}-${context.runId}`;
+              dockerVersion = dockerMetadata.containerimage.digest;
             } else {
               core.setFailed(`Unhandled triggering event.`);
             }
@@ -352,6 +362,8 @@ jobs:
               '| Version | Name | Package |',
               '|---------|------|---------|'
             ];
+
+            dockerTable.push(`| ${dockerVersion}  | `${REGISTRY}/${IMAGE_NAME}:${dockerVersion}` | [Github Package](https://github.com/${context.repo.owner}/${context.repo.repo}/pkgs/container/ethstaker-deposit-cli) |`);
 
             const dockerTableContent = dockerTable.join('\n');
 
