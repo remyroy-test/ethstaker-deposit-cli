@@ -148,8 +148,6 @@ jobs:
       attestations: write
       id-token: write
     outputs:
-      imageid: ${{ steps.push.outputs.imageid }}
-      digest: ${{ steps.push.outputs.digest }}
       metadata: ${{ steps.push.outputs.metadata }}
     steps:
       - name: Checkout repository
@@ -204,14 +202,14 @@ jobs:
       - name: Create draft release
         uses: actions/github-script@v7
         env:
-          imageid: '${{ needs.build-and-push-docker.outputs.imageid }}'
-          digest: '${{ needs.build-and-push-docker.outputs.digest }}'
-          metadata: '${{ needs.build-and-push-docker.outputs.metadata }}'
+          DOCKER_IMAGE_METADATA: '${{ needs.build-and-push-docker.outputs.metadata }}'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             var path = require('path');
             var fs = require('fs');
+
+            const { DOCKER_IMAGE_METADATA } = process.env;
 
             var tagName = '';
             if (context.eventName == 'push') {
