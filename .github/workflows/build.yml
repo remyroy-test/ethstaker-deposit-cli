@@ -203,6 +203,10 @@ jobs:
           pattern: binary-*
       - name: Create draft release
         uses: actions/github-script@v7
+        env:
+          imageid: '${{ needs.build-and-push-docker.outputs.imageid }}'
+          digest: '${{ needs.build-and-push-docker.outputs.digest }}'
+          metadata: '${{ needs.build-and-push-docker.outputs.metadata }}'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
