@@ -149,8 +149,6 @@ jobs:
       id-token: write
     outputs:
       metadata: ${{ steps.push.outputs.metadata }}
-      tags: ${{ steps.meta.outputs.tags }}
-      labels: ${{ steps.meta.outputs.labels }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -205,26 +203,18 @@ jobs:
         uses: actions/github-script@v7
         env:
           DOCKER_IMAGE_METADATA: '${{ needs.build-and-push-docker.outputs.metadata }}'
-          DOCKER_IMAGE_TAGS: '${{ needs.build-and-push-docker.outputs.tags }}'
-          DOCKER_IMAGE_LABELS: '${{ needs.build-and-push-docker.outputs.labels }}'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             var path = require('path');
             var fs = require('fs');
 
-            const { DOCKER_IMAGE_METADATA, DOCKER_IMAGE_TAGS, DOCKER_IMAGE_LABELS, REGISTRY, IMAGE_NAME } = process.env;
-
-            const dockerMetadata = JSON.parse(DOCKER_IMAGE_METADATA);
+            const { DOCKER_IMAGE_METADATA, REGISTRY, IMAGE_NAME } = process.env;
 
             console.log('Metadata:');
             console.log(DOCKER_IMAGE_METADATA);
 
-            console.log('Tags:');
-            console.log(DOCKER_IMAGE_TAGS);
-
-            console.log('Labels:');
-            console.log(DOCKER_IMAGE_LABELS);
+            const dockerMetadata = JSON.parse(DOCKER_IMAGE_METADATA);
 
             var tagName = '';
             var dockerVersion = '';
