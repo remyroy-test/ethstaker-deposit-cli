@@ -205,7 +205,7 @@ jobs:
               core.setFailed(`Unhandled triggering event.`);
             }
 
-            console.log('Creating draft release for tag ${tagName}...')
+            console.log(`Creating draft release for tag ${tagName}...`)
 
             console.log(`tagName: ${tagName}`);
             console.log(`context.sha: ${context.sha}`);
