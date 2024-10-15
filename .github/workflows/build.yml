@@ -353,7 +353,7 @@ jobs:
               '|---------|------|---------|'
             ];
 
-            dockerTable.push(`| ${dockerVersion}  | `${REGISTRY}/${IMAGE_NAME}:${dockerVersion}` | [Github Package](https://github.com/${context.repo.owner}/${context.repo.repo}/pkgs/container/ethstaker-deposit-cli) |`);
+            dockerTable.push(`| ${dockerVersion}  | \`${REGISTRY}/${IMAGE_NAME}:${dockerVersion}\` | [Github Package](https://github.com/${context.repo.owner}/${context.repo.repo}/pkgs/container/ethstaker-deposit-cli) |`);
 
             const dockerTableContent = dockerTable.join('\n');
 
