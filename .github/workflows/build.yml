@@ -325,7 +325,7 @@ jobs:
                 const binaryAssetUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/releases/${tagName}/${binaryName}`;
                 const checksumAssetUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/releases/${tagName}/${checksumName}`;
 
-                binariesTable.push(`| ${system} | ${architecture}       | [${binaryName}](${assetUrl}) | [sha256](${checksumAssetUrl}) |`);
+                binariesTable.push(`| ${system} | ${architecture}       | [${binaryName}](${binaryAssetUrl}) | [sha256](${checksumAssetUrl}) |`);
               }
             });
 
