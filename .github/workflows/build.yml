@@ -322,7 +322,9 @@ jobs:
                 const checksumName = details.binary_checksum;
                 const checksumUrl = details.binary_checksum_download_url;
 
-                binariesTable.push(`| ${system} | ${architecture}       | [${binaryName}](${binaryUrl}) | [sha256](${checksumUrl}) |`);
+                const assetUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/releases/${tagName}/${binaryName}`;
+
+                binariesTable.push(`| ${system} | ${architecture}       | [${binaryName}](${assetUrl}) | [sha256](${checksumUrl}) |`);
               }
             });
 
